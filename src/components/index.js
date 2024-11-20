@@ -1,4 +1,4 @@
-import About from './About/About'
+import About from './about/About'
 import Contact from './contact/Contact'
 import Footer from './footer/Footer'
 import Grocery from './grocery/Grocery'
