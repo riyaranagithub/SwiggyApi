@@ -7,29 +7,28 @@ import Recommended from './Recommended';
 function RestMenu() {
   const { restId } = useParams();
   const dispatch = useDispatch();
-  const restaurantMenu = useSelector((state) => state.home.restaurantMenu); // Get the menu data from the store
-  const isLoading = useSelector((state) => state.home.status) === 'loading'; // Check loading status
+  const restaurantMenu = useSelector((state) => state.home.restaurantMenu);
+  const isLoading = useSelector((state) => state.home.status) === 'loading';
 
   useEffect(() => {
     if (restId) {
-      dispatch(fetchRestaurantMenu(restId)); // Fetch menu data for the specific restaurant
+      dispatch(fetchRestaurantMenu(restId));
     }
   }, [dispatch, restId]);
 
   return (
-    <div>
-      <Link to={`/restaurant/${restId}`}>
-        {isLoading ? ( // Show loading message when fetching data
-          <p>Loading...</p>
-        ) : ( 
-          // Check if restaurantMenu has data before rendering Recommended
-          restaurantMenu.length > 0 ? (
+    <div className="min-h-screen w-full flex items-center justify-center bg-gray-100 px-4">
+      <div className="bg-white p-6 rounded-lg shadow-lg text-center w-full max-w-2xl">
+        <Link to={`/restaurant/${restId}`}>
+          {isLoading ? (
+            <p className="text-lg font-semibold text-gray-600">Loading...</p>
+          ) : restaurantMenu.length > 0 ? (
             <Recommended />
           ) : (
-            <p>No menu available for this restaurant.</p>
-          )
-        )}
-      </Link>
+            <p className="text-lg font-semibold text-gray-600">No menu available for this restaurant.</p>
+          )}
+        </Link>
+      </div>
     </div>
   );
 }

@@ -3,8 +3,12 @@ import React from 'react';
 import SearchBar from '../searchBar/SearchBar';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 function Header() {
+  const cartItems = useSelector((state) => state.cart.items);
+  const cartCount = cartItems.length; // Assuming you have a cart slice in your Redux store
+  console.log(cartCount);
   return (
     <header className="bg-white shadow-md sticky top-0 z-50 mb-2">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
@@ -38,7 +42,7 @@ function Header() {
           <Link to="/cart" className="text-gray-600 hover:text-gray-800 relative">
             <FaShoppingCart className="text-2xl" />
             <span className="absolute -top-2 -right-2 bg-red-600 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">
-              3 {/* Sample cart count */}
+              {cartCount}
             </span>
           </Link>
           <button className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">

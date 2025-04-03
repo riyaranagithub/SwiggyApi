@@ -1,10 +1,11 @@
 import React ,{lazy,Suspense}from "react";
 import { useSelector } from "react-redux";
 import { Header, Footer } from "./components/index";
-import { About, Contact, Grocery, Home, RestMenu } from "./components/index";
+import { About, Contact, Grocery, Home, RestMenu,Cart } from "./components/index";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import CheckOnline from "./components/checkOnline/CheckOnline";
-
+import ScrollToTop from "./components/ScrollToTop";
+import { ToastContainer } from "react-toastify";
 
 const Services = lazy(() => import("./components/services/Services"));
 // Define the router
@@ -14,6 +15,8 @@ const router = createBrowserRouter([
     element: (
       <>
         <Header />
+        <ToastContainer /> {/* Toast notifications */}
+        <ScrollToTop /> {/* Scroll to top on route change */}
         <Outlet /> {/* Render child routes here */}
         <Footer />
       </>
@@ -25,6 +28,8 @@ const router = createBrowserRouter([
       { path: "services", element:<Suspense fallback={<h1>Loading....</h1>}><Services /> </Suspense> },
       { path: "contact", element: <Contact /> },
       { path: "grocery", element: <Grocery /> },
+      { path: "cart", element: <Cart /> },
+
       { path: "restaurant/:restId", element: <RestMenu /> },
     ],
   },

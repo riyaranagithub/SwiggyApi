@@ -1,10 +1,23 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FaRupeeSign, FaStar } from "react-icons/fa";
+import { addToCart } from "../../store/cartSlice"; // Import action
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 
 function Recommended() {
+  const dispatch = useDispatch();
   const menuList = useSelector((state) => state.home.restaurantMenu);
   const length = menuList.length;
+
+  // Function to handle adding item to cart
+  const handleAddToCart = (item) => {
+    dispatch(addToCart(item));
+    toast.success(`${item.name} added to cart!`, {
+      position: "top-right",
+      autoClose: 2000,
+    });
+  };
 
   return (
     <div className="p-4">
@@ -27,7 +40,7 @@ function Recommended() {
 
         return (
           <div
-            key={id} // Ensure the key is applied here
+            key={id}
             className="mb-6 flex justify-between items-start w-3/5 mx-auto py-4 border-b"
           >
             {/* Details */}
@@ -35,17 +48,9 @@ function Recommended() {
               <div className="flex items-center">
                 <div className={`w-4 h-4 rounded-full mr-2`}>
                   {isVeg ? (
-                    <img
-                      src="/veg.png"
-                      alt="Vegetarian"
-                      className="w-4 h-4"
-                    />
+                    <img src="/veg.png" alt="Vegetarian" className="w-4 h-4" />
                   ) : (
-                    <img
-                      src="/nonVeg.png"
-                      alt="Non-Vegetarian"
-                      className="w-4 h-4"
-                    />
+                    <img src="/nonVeg.png" alt="Non-Vegetarian" className="w-4 h-4" />
                   )}
                 </div>
                 <h2 className="text-lg font-medium">{name}</h2>
@@ -77,6 +82,21 @@ function Recommended() {
 
               {/* Description */}
               <p className="text-gray-700 mt-2">{description}</p>
+
+              {/* Add to Cart Button */}
+              <button
+                onClick={() =>
+                  handleAddToCart({
+                    id,
+                    name,
+                    price: (defaultPrice || price) / 100,
+                    imageId,
+                  })
+                }
+                className="mt-3 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              >
+                Add to Cart
+              </button>
             </div>
 
             {/* Image */}
