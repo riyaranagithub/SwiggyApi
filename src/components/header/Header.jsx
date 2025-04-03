@@ -2,7 +2,7 @@
 import React from 'react';
 import SearchBar from '../searchBar/SearchBar';
 import { Link } from 'react-router-dom';
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
 
 function Header() {
